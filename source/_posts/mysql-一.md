@@ -74,3 +74,51 @@ desc user;
 - 外键约束
   - 主表没有记录，子表中不能添加相应的记录
   - 修改和删除主表记录不能让子表记录孤立，必须相应修改和删除
+
+# 数据操作语言
+```sql
+-- 关键字大写
+-- PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE `student`
+(
+id INT(11) NOT NULL,
+name VARCHAR(64) NOT NULL,
+age INT(11) DEFAULT NULL,
+city VARCHAR(64) DEFAULT '北京'
+)
+SELECT * FROM student
+DESC student
+
+-- 如何修改和增加表里的字段
+ALTER TABLE student ADD COLUMN idcard VARCHAR(225) NULL
+-- 修改列
+ALTER TABLE student MODIFY idcard VARCHAR(128) NOT NULL
+-- 删除列
+ALTER TABLE student DROP idcard
+
+-- 增加约束
+ALTER TABLE student ADD PRIMARY KEY
+
+-- 增加唯一约束
+ALTER TABLE student ADD UNIQUE INDEX uq_student_idcard (idcard)
+
+-- 增加默认约束
+ALTER TABLE student MODIFY COLUMN city VARCHAR(64) DEFAULT '南京'
+
+-- 主外键
+ALTER TABLE score ADD CONSTRAINT fk_score_student_id FOREIGN KEY(student_id) REFERENCES student(id)
+
+-- sql
+-- 插入
+INSERT INTO student(name,idcard,age,city)
+VALUES('张三','123456',10,'北京')
+INSERT INTO student(name,idcard,age,city)
+VALUES('李四','123451',18,'广州')
+SELECT * FROM student
+-- 更新
+-- 1 -> 可以一次更新多列，可以用逗号隔开 2.可以指定更新条件，如果有我个条件可以用and or not
+UPDATE student SET age=40,city='上海' WHERE id = 1
+-- 删除
+DELETE FROM student WHERE id = 3
+-- TRUNCATE 截断表 重置表标识列
+```
