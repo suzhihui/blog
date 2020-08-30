@@ -3,7 +3,7 @@
 title: mysql
 date: 2020-08-25 01:28:32
 tags: mysql
-category: 前端
+category: 后端
 cover: '/img/desk.png'
 ---
 # 数据库能做什么
