@@ -122,3 +122,21 @@ UPDATE student SET age=40,city='上海' WHERE id = 1
 DELETE FROM student WHERE id = 3
 -- TRUNCATE 截断表 重置表标识列
 ```
+```sql
+SELECT * FROM stu.student;
+-- 查询北京 的同学信息， 并按ID倒序排列
+SELECT id, NAME FROM student where city='北京' ORDER BY id DESC
+-- 别名
+SELECT id, name, city home FROM student WHERE city='南京' ORDER BY id ASC
+-- 查询空行
+INSERT INTO student(name, idcard, age, city) VALUES('陈七', '7', 7, '北京')
+SELECT * FROM stu.student WHERE level IS NULL
+-- 常量列
+SELECT id, NAME, city, '中国' as country
+FROM student where city='北京'
+ORDER BY id DESC
+-- 分页
+SELECT id, NAME, city
+FROM student
+limit 3, 3
+```
