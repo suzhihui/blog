@@ -432,7 +432,7 @@ cover: '/img/desk.png'
   ```typescript
   // main.ts中
   app.use(cookieParser(process.env.SECRET)); // 配合dotenv包来使用
-  ```
+  ```c
 
   ```typescript
   import { Controller, Get, Response, Request } from '@nestjs/common';
