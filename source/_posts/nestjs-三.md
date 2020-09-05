@@ -27,6 +27,7 @@ cover: '/img/desk.png'
 ## 四、目前`Nodejs`中常用的`ORM`框架
 
 * [`TypeORM`](https://typeorm.io/)
+* [`TypeORM中文文档`](https://www.bookstack.cn/read/TypeORM-0.2.20-zh/spilt.17.spilt.3.README.md)
 * [`sequelize`](https://sequelize.org/)
 
 在`Nestjs`中两个`ORM`都支持使用,一般使用`TypeORM`的比较多
