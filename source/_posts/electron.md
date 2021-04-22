@@ -5,4 +5,4 @@ tags: electron
 category: 前端
 ---
 ### 概念
-![输入图片说明](/img/election/1.png)
+<!-- ![输入图片说明](/img/election/1.png) -->

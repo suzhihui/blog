@@ -6,6 +6,7 @@ category: 前端
 ---
 
 ### 安装
+<!-- ![输入图片说明](/img/election/1.png) -->
 ```bash
 brew install git
 ```
