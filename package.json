@@ -9,14 +9,14 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "4.2.1"
+    "version": "5.4.0"
   },
   "dependencies": {
     "acorn": "^7.1.1",
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "^1.0.0-rc.9",
     "eslint": "^6.8.0",
     "g": "^2.0.1",
-    "hexo": "^4.2.1",
+    "hexo": "^5.0.0",
     "hexo-deployer-git": "^2.1.0",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
@@ -27,6 +27,8 @@
     "hexo-renderer-pug": "^1.0.0",
     "hexo-renderer-stylus": "^1.1.0",
     "hexo-server": "^1.0.0",
-    "hexo-wordcount": "^6.0.1"
+    "hexo-wordcount": "^6.0.1",
+    "i": "^0.3.6",
+    "npm": "^7.13.0"
   }
 }
