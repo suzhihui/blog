@@ -1,7 +1,7 @@
 ---
 title: scss
 date: 2021-06-10 14:46:40
-tags:
+tags: 样式
 cover: https://icweiliimg6.pstatp.com/weili/smh/902952372222034012.webp
 ---
 
