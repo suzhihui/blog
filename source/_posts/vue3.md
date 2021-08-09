@@ -30,6 +30,7 @@ category: 前端
 
 ## 安装
 - vue-cli
+
 ```bash
 ## @vue/cli 4.5.0以上
 vue --version
@@ -44,10 +45,11 @@ npm run serve
 ```
 
 - vite
+
 > [官网](https://cn.vitejs.dev/) 新一代前端构建工具
     - 开发环境中, 无需打包，可快速冷启动
     - 快速热重载（HMR)
-    - 真正的按需编译
+     - 真正的按需编译
 
 ```sh
 ## 创建
@@ -70,3 +72,15 @@ npm run dev
     - 注意点：
         - 不要跟vue2.x 混用
         - setup 不能是一个async函数
+
+```js
+// 渲染函数
+import {h} from 'vue'
+
+export default {
+    name: 'App',
+    setup() {
+        return () => h('h1', '老苏')
+    }
+}
+```
