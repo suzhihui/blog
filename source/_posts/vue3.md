@@ -1,134 +1,72 @@
 ---
 title: vue3
 date: 2021-06-15 14:42:38
-tags: 前端
+tags: vue
+category: 前端
 ---
-## 诞生的理由
-vue2
-- 复杂代码越来越难维护
-- ts 支持有限
 
-## 生态圈
-[脚手架](https://cli.vuejs.org/zh/)
-[v3官网](https://v3.cn.vuejs.org/)
+## vue3 简介
+## 特点
+- 性能提升
+- 源码行升级
+    - Proxy 代替 defineProperty实现响应式
+    - 重写虚拟DOM实现和tree-shaking
+- 拥抱Ts
+- Composition API (组合API)
+    - setup
+    - ref与reactive
+    - watch与watchEffect
+    - provide与inject
+    - ...
+- 新的内置组件
+    - Fragment
+    - Teleport
+    - Suspense
+- 其他改变
+    - 新的生命周期钩子
+    - data选项应始终被声明为一个函数
+    - 移除keyCode支持作为v-on的修饰符
+    - 。。。
+
 ## 安装
+- vue-cli
 ```bash
+## @vue/cli 4.5.0以上
+vue --version
+vue -V
+## 安装或者升级你的@vue/cli
 npm install -g @vue/cli
-
-vue create 项目名称
+## 创建
+vue create vue_test
+## 启动
+cd vue_test
+npm run serve
 ```
 
-### eslint 不生效
-根目录下新建.vscode文件夹 > settings.json
+- vite
+> [官网](https://cn.vitejs.dev/) 新一代前端构建工具
+    - 开发环境中, 无需打包，可快速冷启动
+    - 快速热重载（HMR)
+    - 真正的按需编译
 
-```json
-{
-    "eslint.validate": ["typescript"]
-}
+```sh
+## 创建
+npm init vite-app <propject-name>
+## 启动
+cd <project-name>
+npm install 
+npm run dev
 ```
 
-### vetur
-[官网](https://vuejs.github.io/vetur/)
-
-## 新特性
-- `setup` [组件选项](https://v3.cn.vuejs.org/guide/composition-api-introduction.html#setup-%E7%BB%84%E4%BB%B6%E9%80%89%E9%A1%B9)
-    - props
-    - context
-
-- `ref` 响应式变量 使任何响应式变量在任何地方起作用
-
-![ref](/img/v3/ref.jpg)
-```js
-// src/components/UserRepositories.vue
-import { fetchUserRepositories } from '@/api/repositories'
-import { ref } from 'vue'
-
-export default {
-  components: { RepositoriesFilters, RepositoriesSortBy, RepositoriesList },
-  props: {
-    user: {
-      type: String,
-      required: true
-    }
-  },
-  setup (props) {
-    const repositories = ref([])
-    const getUserRepositories = async () => {
-      repositories.value = await fetchUserRepositories(props.user)
-    }
-
-    return {
-      repositories,
-      getUserRepositories
-    }
-  },
-  data () {
-    return {
-      filters: { ... }, // 3
-      searchQuery: '' // 2
-    }
-  },
-  computed: {
-    filteredRepositories () { ... }, // 3
-    repositoriesMatchingSearchQuery () { ... }, // 2
-  },
-  watch: {
-    user: 'getUserRepositories' // 1
-  },
-  methods: {
-    updateFilters () { ... }, // 3
-  },
-  mounted () {
-    this.getUserRepositories() // 1
-  }
-}
-```
-
-- `toRef` 可以用来为源响应式对象上的某个 property 新创建一个 ref。然后，ref 可以被传递，它会保持对其源 property 的响应式连接
-
-```js
-const state = reactive({
-  foo: 1,
-  bar: 2
-})
-
-const fooRef = toRef(state, 'foo')
-
-fooRef.value++
-console.log(state.foo) // 2
-
-state.foo++
-console.log(fooRef.value) // 3
-```
-
-- `toRefs` 将响应式对象转换为普通对象，其中结果对象的每个 property 都是指向原始对象相应 property 的 ref
-- `isRef` 检查值是否为一个 ref 对象
-
-- `computed` 
-    - 接受一个 getter 函数，并为从 getter 返回的值返回一个不变的响应式 ref 对象。
-    - 它也可以使用具有 get 和 set 函数的对象来创建可写的 ref 对象
-
-```js
-const count = ref(1)
-const plusOne = computed(() => count.value + 1)
-
-console.log(plusOne.value) // 2
-
-plusOne.value++ // 错误
-```
-    
-
-```js
-const count = ref(1)
-const plusOne = computed({
-  get: () => count.value + 1,
-  set: val => {
-    count.value = val - 1
-  }
-})
-
-plusOne.value = 1
-console.log(count.value) // 0
-```
-
-- `reactive`
+## composition API 组合式api
+[官网](https://v3.cn.vuejs.org/api/composition-api.html)
+- setup
+    - vue3 新的配制项， 函数 
+    - setup 是所有compositionApi 表演舞台
+    - 组件中所用到的：数据、方法等，均要在setup中配置
+    - setup函数的两种返回值：
+        - 对象
+        - 渲染函数
+    - 注意点：
+        - 不要跟vue2.x 混用
+        - setup 不能是一个async函数

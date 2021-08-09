@@ -11,6 +11,7 @@ Vite (法语意为 "快速的"，发音 /vit/) 是一种新型前端构建工具
 Vite 意在提供开箱即用的配置，同时它的 插件 API 和 JavaScript API 带来了高度的可扩展性，并有完整的类型支持。
 
 ## 安装
+[官网](https://cn.vitejs.dev/)
 ```bash 
 npm install vite@latest -g
 ```
