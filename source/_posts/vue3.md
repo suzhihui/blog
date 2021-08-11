@@ -92,4 +92,13 @@ export default {
         - JS中操作数据： xxx.value
         - 模板中读取数据：不需要.value
     - 备注
-        -
+        - 接收的数据可以是： 基本类型、也可以是对象类型
+        - 基本类型的数据：响应式依然是靠Object.defineProperty()的get与set完成
+        - 对象类型的数据：reactive函数 （内部用的Proxy做响应处理)
+    
+- reactive函数
+    - 定义一个`对象类型`的响应式数据
+    - 语法
+        - `const 代理对象= reactive(被代理对象)` 接收一个对象（或数组）,返回一个`代理器对象（proxy对象)`
+    - reactive 定义的响应式数据是“深层次的"
+    - 内部基于ES6的Proxy实现，通过代理对象操作源对象内部数据都是响应式的
