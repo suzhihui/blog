@@ -6,6 +6,7 @@ category: 前端
 ---
 
 ## vue3 简介
+[v3官网](https://v3.cn.vuejs.org/)
 ## 特点
 - 性能提升
 - 源码行升级
@@ -284,3 +285,121 @@ watchEffect(() => {
     console.log('watchEffect配置的回调执行了')
 })
 ```
+
+## toRef
+- 作用：创建一个ref对象，其value值指向另一个对象中的某个属性。
+- 语法：`const name = toRefs(person, 'name')`
+- 应用：要将响应式对象中的某个属性单独提供给外部使用时
+- 扩展： `toRefs`与`toRef`功能一致，但可以批量创建多个`ref`对象，语法：`roRefs(person)`
+
+##  其它Composition API
+- shallowReactive 与 shallowRef
+    - shallowReactive: 只处理对象最外层属性的响应式 （浅响应式）
+    - shallowRef: 只处理基本数据类型的响应式，不进行对象的响应式处理。
+    - 什么时候用：
+        - 如果有一个对象数据，结构比较深，但变化时只是外层属性变化 ===> shallowReactive.
+        - 如果有一个对象数据， 后续功能不会修改该对象中的属性， 而是生成新的对象来替换 ===> shallowRef.
+- readonly 与 shallowReadonly
+    - readonly: 让一个响应式数据变为只读的（深只读)
+    - shallowReadonly: 让一个响应式数据变为只读的（浅只读）
+    - 应用场景：不希望数据被修改时
+- toRow 与 markRow
+    - toRow:
+        - 作用： 将一个由reactive生成的`响应式对象`转为` `
+        - 使用场景： 用于读取响应式对象对应的普通对象，对这个普通对象的所有操作，不会引起页面更新。
+    - markRaw:
+        - 作用： 标记一人对象，使其永远不会再成为响应式对象
+        - 应用场景：
+            1.有些值不应被设置为响应式的，例如复杂的第三方类库等
+            2.当渲染具有不可变数据源的大列表时，跳过响应式转换可以提高性能。
+
+- [customRef](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/customRef)
+    - 创建一个自定义的 ref，并对其依赖项跟踪和更新触发进行显式控制。
+
+```html
+<input v-model="text" />
+```
+```js
+function useDebouncedRef(value, delay = 200) {
+  let timeout
+  return customRef((track, trigger) => {
+    return {
+      get() {
+        track()
+        return value
+      },
+      set(newValue) {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+          value = newValue
+          trigger()
+        }, delay)
+      }
+    }
+  })
+}
+
+export default {
+  setup() {
+    return {
+      text: useDebouncedRef('hello')
+    }
+  }
+}
+```
+类型声明：
+```ts
+function customRef<T>(factory: CustomRefFactory<T>): Ref<T>
+
+type CustomRefFactory<T> = (
+  track: () => void,
+  trigger: () => void
+) => {
+  get: () => T
+  set: (value: T) => void
+}
+```
+- provide与inject
+    - 作用： 实现祖孙组件间通信
+    - 套路： 父组件有一个provide选项来提供数据，后代组件有一个inject 选项来开始使用这些数据
+    - 具体写法：
+        ```js
+        setup() {
+            ...
+            let car = reactive({name: '奔驰', price: '40W'})
+            provide('car', car)
+            ...
+        }
+        ```
+    - 后代组件中：
+    ```js
+    setup(props, context) {
+        ...
+        const car = inject('car')
+        return {car}
+        ...
+    }
+    ```
+- 响应式数据的判断
+    - isRef: 检查一个值是否为一个ref对象
+    - isReactive: 检查一个对象是否是由reactive创建的响应式代理
+    - isReadonly: 检查一个对象是否是由readonly创建的只读代理
+    - isProxy: 检查一个对象是否是由reactive或者readonlay方法创建的代理
+
+## vue3.0新的组件
+- Fragment
+    - 在vue2.x中：组件必须有一个根标签
+    - 在vue3.0中：组件可以没有要标签，内部会将多个标签包含在一个Fragment虚拟元素中
+    - 好处: 减少标签层级，减小内存占用
+- Teleport
+    - 什么是Teleport? ---- Teleport 是一种能够将我们的`组件html结构`移动指定位置的技术
+    ```html
+    <teleport to="移动位置">
+        <div v-if="isShow" class="mask">
+            <div class="dialog">
+                <h3>我是一个弹窗</h3>
+                <button @click="isShow = false">关闭弹窗</button>
+            </div>
+        </div>
+    </teleport>
+    ```
